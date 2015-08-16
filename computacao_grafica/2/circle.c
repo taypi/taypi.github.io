@@ -1,6 +1,5 @@
 #include <GL/glut.h>
 #include <stdlib.h>
-#include <GL/glut.h>
 
 void init(void);
 void pontosDaCircunferencia(int, int);

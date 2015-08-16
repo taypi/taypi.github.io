@@ -4,9 +4,8 @@
 void init(void);
 void display(void);
 
-int x1=40, y1=200, x2=200, y2=10, x, y, delta_x, delta_y, s1, s2, temp;
+int x1=40, y1=200, x2=200, y2=10, x, y, delta_x, delta_y, s1, s2, temp, new_e;
 bool troca=0;
-float new_e;
 
 int main(int argc, char** argv){
   glutInit(&argc, argv);

@@ -1,5 +1,3 @@
-/* programa teste-make.c */
-
 #include <GL/glut.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -8,9 +6,7 @@ void display(void);
 void timer(int);
 void keyboard(unsigned char key, int x, int y);
 
-/* cores do quadrado */
-GLfloat r=1.0, g=1.0, b=1.0, r1=1.0, g1=0.0, b1=0.0, r2=0.0, g2=1.0, b2=0.0, r3=0.0, g3=0.0, b3=1.0, tempR, tempG, tempB;
-bool bigR = false, bigG = false, bigB = false;
+GLfloat r[5]={1.0,0.0,0.0,0.5,0.0}, g[5]={0.0,1.0,0.0,0.5,0.0}, b[5]={0.0,0.0,1.0,0.5,0.0};
 
 int main(int argc, char** argv){
   glutInit(&argc, argv);
@@ -35,30 +31,23 @@ void timer(int value){
 void display(void){
   glClear(GL_COLOR_BUFFER_BIT);
   glBegin(GL_POLYGON);
-	glColor3f (r, g, b);
+	glColor3f (r[0], g[0], b[0]);
   glVertex2f(0.25,0.25);
-	glColor3f (r1, g1, b1);
+	glColor3f (r[1], g[1], b[1]);
   glVertex2f(0.75,0.25);
-	glColor3f (r2, g2, b2);
+	glColor3f (r[2], g[2], b[2]);
   glVertex2f(0.75,0.75);
-	glColor3f (r3, g3, b3 );
+	glColor3f (r[3], g[3], b[3]);
   glVertex2f(0.25,0.75);
   glEnd();
   glFlush();
 	glutSwapBuffers();
-  tempR=r3;
-  tempG=g3;
-  tempB=b3;
-  r3=r2;
-  g3=g2;
-  b3=b2;
-  r2=r1;
-  g2=g1;
-  b2=b1;
-  r1=r;
-  g1=g;
-  b1=b;
-  r=tempR;
-  g=tempG;
-  b=tempB;
+  r[4]=r[0];
+  g[4]=g[0];
+  b[4]=b[0];
+  for (int i=0; i<4; i++){
+    r[i]=r[i+1];
+    g[i]=g[i+1];
+    b[i]=b[i+1];
+  }
 }
