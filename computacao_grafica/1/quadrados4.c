@@ -15,11 +15,11 @@ bool bigR = false, bigG = false, bigB = false;
 int main(int argc, char** argv){
   glutInit(&argc, argv);
   glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
-  glutInitWindowSize (256, 256); 
-  glutInitWindowPosition (100, 100); 
+  glutInitWindowSize (256, 256);
+  glutInitWindowPosition (100, 100);
   glutCreateWindow (argv[0]);
   // inicia um temporizador. após 33ms ativa a funcao timer
-  glutTimerFunc(75, timer, 1);
+  glutTimerFunc(50, timer, 1);
   glClearColor(1.0, 1.0, 1.0, 0.0);
   glShadeModel (GL_FLAT);
   glOrtho (0, 1, 0, 1, -1 ,1);
