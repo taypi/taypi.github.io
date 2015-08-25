@@ -64,7 +64,7 @@ void mouse(int button, int state, int px, int py){
   switch (button){
   case GLUT_LEFT_BUTTON:
   if (state == GLUT_DOWN){
-    defineColor(px,py);
+    defineColor(px,(py*-1)+256);
   }
   break;
   }
