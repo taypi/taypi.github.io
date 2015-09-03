@@ -66,9 +66,9 @@ void display(void){
   glPolygonMode(GL_BACK, GL_FILL);
   glColor3f(r, g, b);
   glBegin(GL_POLYGON);
-  glVertex2i(50,150); glVertex2i(50+200/3,50);
-  glVertex2i(50+2*200/3,50); glVertex2i(250,150);
-  glVertex2i(50+2*200/3,250); glVertex2i(50+200/3,250);
+  glVertex2i(50,150); glVertex2i(50+200/3,250);
+  glVertex2i(50+2*200/3,250); glVertex2i(250,150);
+  glVertex2i(50+2*200/3,50); glVertex2i(50+200/3,50);
   glEnd();
 
   glEnable(GL_POLYGON_STIPPLE);

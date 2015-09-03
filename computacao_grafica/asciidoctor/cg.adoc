@@ -1,0 +1,98 @@
+:imagesdir: source
+:data-uri:
+:sourcedir: ../
+:source-highlighter: coderay
+
+= Computação Gráfica
+
+== Solução dos Exercícios Propostos
+
+Para compilar os arquivos que serão apresentados nessa página, será necessária a utilização do utilitário *make*, e para tal é preciso baixar o arquivo link:../Makefile[Makefile] e colocá-lo na mesma pasta do arquivo fonte. Depois disso é só digitar na linha de comando _make nomeDoArquivo && ./nomeDoArquivo_ que o programa será executado.
+
+=== Conceitos Iniciais
+
+==== 1.4.1 _quadrados4_
+
+.. Código fonte: link:../quadrados4.c[quadrados4.c]
+
+.. Resultado
+
+image::1/quadrados4.gif[]
+
+==== 1.4.2 _quadradoscolor_
+
+.. Código fonte: link:../quadradoscolor.c[quadradoscolor.c]
+
+.. Resultado
+
+image::1/quadradoscolor.gif[]
+
+=== Desenhando linhas e pontos
+
+==== 2.2.1 _quadrado_
+
+.. Código fonte: link:../quadrado.c[quadrado.c]
+
+.. Resultado
+
+image::2/quadrado.gif[]
+
+==== 2.2.2 _Algoritmo de bresenham para traçado de linha_
+
+.. Código fonte: link:../bresenham.c[quadrado.c]
+
+.. Resultado
+
+image::2/bresenham.png[]
+
+==== 2.2.3 _Algoritmo de bresenham para circunferência_
+
+.. Código fonte: link:../circle.c[circle.c]
+
+.. Resultado
+
+image::2/circle.png[]
+
+=== Preenchimento de regiões
+
+==== 3.2.1 _selecao_
+
+.. Código fonte: link:../selecao.c[selecao.c]
+
+.. Resultado
+
+image::3/selecao.gif[]
+
+==== 3.2.2 _selecaoSingleBuffer_
+
+.. Código fonte: link:../selecaoSingleBuffer.c[selecao.c]
+
+.. Resultado
+
+Não ocorreram mudanças em relação ao código anterior.
+
+==== 3.2.3 _padrao_
+
+.. Código fonte: link:../padrao.c[padrao.c]
+
+.. Resultado
+
+image::3/padrao.gif[]
+
+=== Transformações
+
+==== 4.2.1 _braco_garra_
+
+.. Código fonte: link:../braco_garra.c[braco_garra.c]
+
+.. Resultado
+
+image::4/braco_garra.gif[]
+
+==== 4.2.2 _braco_garra_3d_
+
+.. Código fonte: link:../braco_garra_3d.c[braco_garra_3d.c]
+
+.. Resultado
+
+image::4/braco_garra_3d.gif[]
