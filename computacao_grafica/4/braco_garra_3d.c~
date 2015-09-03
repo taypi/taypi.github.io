@@ -6,6 +6,8 @@ static int shoulder = 0, elbow = 0, thumb = 0, index = 0, middle = 0, base = 0;
 void init(void){
   glClearColor (0.0, 0.0, 0.0, 0.0);
 	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 }
 
 void display(void){
@@ -14,7 +16,9 @@ void display(void){
 
   /* origem posicionada no ombro */
   glTranslatef (-1.0, 0.0, 0.0);
+	glPushMatrix();
 	glRotatef ((GLfloat) base, 0.0, 1.0, 0.0);
+	glPopMatrix();
   glRotatef ((GLfloat) shoulder, 0.0, 0.0, 1.0);
 
   /* origem posicionada no centro do braço */ 
