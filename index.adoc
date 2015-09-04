@@ -86,7 +86,7 @@ Não ocorreram mudanças em relação ao código anterior.
 
 .. Resultado
 
-image::3/padrao.gif[]
+image::3/padrao.jpg[]
 
 === Transformações
 
