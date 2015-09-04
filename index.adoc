@@ -3,7 +3,7 @@
 :sectnums:
 :linkattrs:
 :toc: left
-:sourcedir: computacao_grafica/
+:sourcedir: computacao_grafica
 :source-highlighter: coderay
 
 = Computação Gráfica
@@ -22,17 +22,27 @@ $ make nomeDoArquivo && ./nomeDoArquivo
 
 ==== _quadrados4_
 
-.. Código fonte: link:computacao_grafica/1/quadrados4.c[quadrados4.c, window="_blank"]
+* Código fonte: link:computacao_grafica/1/quadrados4.c[quadrados4.c, window="_blank"]
 
-.. Resultado
+[source,c]
+----
+include::{sourcedir}/1/quadrados4.c[]
+----
+
+* Resultado
 
 image::1/quadrados4.gif[]
 
 ==== _quadradoscolor_
 
-.. Código fonte: link:computacao_grafica/1/quadradoscolor.c[quadradoscolor.c, window="_blank"]
+* Código fonte: link:computacao_grafica/1/quadradoscolor.c[quadradoscolor.c, window="_blank"]
 
-.. Resultado
+[source,c]
+----
+include::{sourcedir}/1/quadradoscolor.c[]
+----
+
+* Resultado
 
 image::1/quadradoscolor.gif[]
 
@@ -40,25 +50,40 @@ image::1/quadradoscolor.gif[]
 
 ==== _quadrado_
 
-.. Código fonte: link:computacao_grafica/2/quadrado.c[quadrado.c, window="_blank"]
+* Código fonte: link:computacao_grafica/2/quadrado.c[quadrado.c, window="_blank"]
 
-.. Resultado
+[source,c]
+----
+include::{sourcedir}/2/quadrado.c[]
+----
+
+* Resultado
 
 image::2/quadrado.gif[]
 
 ====  _Algoritmo de bresenham para traçado de linha_
 
-.. Código fonte: link:computacao_grafica/2/bresenham.c[quadrado.c, window="_blank"]
+* Código fonte: link:computacao_grafica/2/bresenham.c[quadrado.c, window="_blank"]
 
-.. Resultado
+[source,c]
+----
+include::{sourcedir}/2/bresenham.c[]
+----
+
+* Resultado
 
 image::2/bresenham.png[]
 
 ==== _Algoritmo de bresenham para circunferência_
 
-.. Código fonte: link:computacao_grafica/2/circle.c[circle.c, window="_blank"]
+* Código fonte: link:computacao_grafica/2/circle.c[circle.c, window="_blank"]
 
-.. Resultado
+[source,c]
+----
+include::{sourcedir}/2/circle.c[]
+----
+
+* Resultado
 
 image::2/circle.png[]
 
@@ -66,25 +91,44 @@ image::2/circle.png[]
 
 ==== _selecao_
 
-.. Código fonte: link:computacao_grafica/3/selecao.c[selecao.c, window="_blank"]
+* Código fonte: link:computacao_grafica/3/selecao.c[selecao.c, window="_blank"]
 
-.. Resultado
+[source,c]
+----
+include::{sourcedir}/3/selecao.c[]
+----
+
+* Resultado
 
 image::3/selecao.gif[]
 
 ==== _selecaoSingleBuffer_
 
-.. Código fonte: link:computacao_grafica/3/selecaoSingleBuffer.c[selecao.c, window="_blank"]
+* Código fonte: link:computacao_grafica/3/selecaoSingleBuffer.c[selecao.c, window="_blank"]
 
-.. Resultado
+[source,c]
+----
+include::{sourcedir}/3/selecaoSingleBuffer.c[]
+----
+
+* Resultado
+
+====
 
 Não ocorreram mudanças em relação ao código anterior.
 
+====
+
 ==== _padrao_
 
-.. Código fonte: link:computacao_grafica/3/padrao.c[padrao.c, window="_blank"]
+* Código fonte: link:computacao_grafica/3/padrao.c[padrao.c, window="_blank"]
 
-.. Resultado
+[source,c]
+----
+include::{sourcedir}/3/padrao.c[]
+----
+
+* Resultado
 
 image::3/padrao.jpg[]
 
@@ -92,16 +136,26 @@ image::3/padrao.jpg[]
 
 ==== _braco_garra_
 
-.. Código fonte: link:computacao_grafica/4/braco_garra.c[braco_garra.c, window="_blank"]
+* Código fonte: link:computacao_grafica/4/braco_garra.c[braco_garra.c, window="_blank"]
 
-.. Resultado
+[source,c]
+----
+include::{sourcedir}/4/braco_garra.c[]
+----
+
+* Resultado
 
 image::4/braco_garra.gif[]
 
 ==== _braco_garra_3d_
 
-.. Código fonte: link:computacao_grafica/4/braco_garra_3d.c[braco_garra_3d.c, window="_blank"]
+* Código fonte: link:computacao_grafica/4/braco_garra_3d.c[braco_garra_3d.c, window="_blank"]
 
-.. Resultado
+[source,c]
+----
+include::{sourcedir}/4/braco_garra_3d.c[]
+----
+
+* Resultado
 
 image::4/braco_garra_3d.gif[]

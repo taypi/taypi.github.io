@@ -539,15 +539,84 @@ table.CodeRay td.code>pre{padding:0}
 <h3 id="_conceitos_iniciais">1.1. Conceitos Iniciais</h3>
 <div class="sect3">
 <h4 id="__em_quadrados4_em">1.1.1. <em>quadrados4</em></h4>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<div class="ulist">
+<ul>
 <li>
 <p>Código fonte: <a href="computacao_grafica/1/quadrados4.c" target="_blank">quadrados4.c</a></p>
 </li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c"><span class="preprocessor">#include</span> <span class="include">&lt;GL/glut.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;stdlib.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;stdio.h&gt;</span>
+
+<span class="directive">void</span> display(<span class="directive">void</span>);
+<span class="directive">void</span> timer(<span class="predefined-type">int</span>);
+<span class="directive">void</span> keyboard(<span class="predefined-type">unsigned</span> <span class="predefined-type">char</span> key, <span class="predefined-type">int</span> x, <span class="predefined-type">int</span> y);
+
+<span class="comment">//cores dos quadrados</span>
+GLfloat r=<span class="float">0</span><span class="float">.8</span>, g=<span class="float">0</span><span class="float">.5</span>, b=<span class="float">0</span><span class="float">.3</span>;
+<span class="comment">//flags para controle das cores</span>
+<span class="predefined-type">bool</span> bigR = <span class="predefined-constant">false</span>, bigG = <span class="predefined-constant">false</span>, bigB = <span class="predefined-constant">false</span>;
+
+<span class="predefined-type">int</span> main(<span class="predefined-type">int</span> argc, <span class="predefined-type">char</span>** argv){
+  glutInit(&amp;argc, argv);
+  glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
+  glutInitWindowSize (<span class="integer">256</span>, <span class="integer">256</span>);
+  glutInitWindowPosition (<span class="integer">100</span>, <span class="integer">100</span>);
+  glutCreateWindow (argv[<span class="integer">0</span>]);
+  <span class="comment">// inicia um temporizador. após 33ms ativa a funcao timer</span>
+  glutTimerFunc(<span class="integer">50</span>, timer, <span class="integer">1</span>);
+  glClearColor(<span class="float">1</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+  glShadeModel (GL_FLAT);
+  glOrtho (<span class="integer">0</span>, <span class="integer">1</span>, <span class="integer">0</span>, <span class="integer">1</span>, -<span class="integer">1</span> ,<span class="integer">1</span>);
+  glutDisplayFunc(display);
+  glutMainLoop();
+  <span class="keyword">return</span> <span class="integer">0</span>;
+}
+
+<span class="directive">void</span> timer(<span class="predefined-type">int</span> value){
+  <span class="keyword">if</span>(r&gt;<span class="integer">1</span>) bigR = <span class="predefined-constant">true</span>;
+  <span class="keyword">else</span> <span class="keyword">if</span>(r&lt;<span class="integer">0</span>) bigR = <span class="predefined-constant">false</span>;
+  <span class="keyword">if</span>(g&gt;<span class="integer">1</span>) bigG = <span class="predefined-constant">true</span>;
+  <span class="keyword">else</span> <span class="keyword">if</span>(g&lt;<span class="integer">0</span>) bigG = <span class="predefined-constant">false</span>;
+  <span class="keyword">if</span>(b&gt;<span class="integer">1</span>) bigB = <span class="predefined-constant">true</span>;
+  <span class="keyword">else</span> <span class="keyword">if</span>(b&lt;<span class="integer">0</span>) bigB = <span class="predefined-constant">false</span>;
+
+  <span class="keyword">if</span>(bigR == <span class="predefined-constant">false</span>) r=r+<span class="float">0</span><span class="float">.01</span>;
+  <span class="keyword">else</span> r=r-<span class="float">0</span><span class="float">.01</span>;
+  <span class="keyword">if</span>(bigG == <span class="predefined-constant">false</span>) g=g+<span class="float">0</span><span class="float">.03</span>;
+  <span class="keyword">else</span> g=g-<span class="float">0</span><span class="float">.03</span>;
+  <span class="keyword">if</span>(bigB == <span class="predefined-constant">false</span>) b=b+<span class="float">0</span><span class="float">.05</span>;
+  <span class="keyword">else</span> b=b-<span class="float">0</span><span class="float">.05</span>;
+  glutPostRedisplay();
+  glutTimerFunc(<span class="integer">50</span>, timer, <span class="integer">1</span>);
+}
+
+<span class="directive">void</span> display(<span class="directive">void</span>){
+  glClear(GL_COLOR_BUFFER_BIT);
+  <span class="keyword">for</span> (<span class="predefined-type">int</span> i = <span class="integer">0</span>; i &lt; <span class="integer">4</span>; i++){
+    glColor3f (r+i*<span class="float">0</span><span class="float">.2</span>, g+i*<span class="float">0</span><span class="float">.2</span>, b+i*<span class="float">0</span><span class="float">.2</span>);
+    glBegin(GL_POLYGON);
+    glVertex2f(<span class="float">0</span><span class="float">.10</span>+i*<span class="float">0</span><span class="float">.1</span>,<span class="float">0</span><span class="float">.10</span>+i*<span class="float">0</span><span class="float">.1</span>);
+    glVertex2f(<span class="float">0</span><span class="float">.60</span>+i*<span class="float">0</span><span class="float">.1</span>,<span class="float">0</span><span class="float">.10</span>+i*<span class="float">0</span><span class="float">.1</span>);
+    glVertex2f(<span class="float">0</span><span class="float">.60</span>+i*<span class="float">0</span><span class="float">.1</span>,<span class="float">0</span><span class="float">.60</span>+i*<span class="float">0</span><span class="float">.1</span>);
+    glVertex2f(<span class="float">0</span><span class="float">.10</span>+i*<span class="float">0</span><span class="float">.1</span>,<span class="float">0</span><span class="float">.60</span>+i*<span class="float">0</span><span class="float">.1</span>);
+    glEnd();
+    glFlush();
+  }
+  glutSwapBuffers();
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Resultado</p>
 </li>
-</ol>
+</ul>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -557,15 +626,122 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div class="sect3">
 <h4 id="__em_quadradoscolor_em">1.1.2. <em>quadradoscolor</em></h4>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<div class="ulist">
+<ul>
 <li>
 <p>Código fonte: <a href="computacao_grafica/1/quadradoscolor.c" target="_blank">quadradoscolor.c</a></p>
 </li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c"><span class="preprocessor">#include</span> <span class="include">&lt;GL/glut.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;stdlib.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;stdio.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;time.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;math.h&gt;</span>
+
+<span class="directive">void</span> display(<span class="directive">void</span>);
+<span class="directive">void</span> timer(<span class="predefined-type">int</span>);
+<span class="directive">void</span> keyboard(<span class="predefined-type">unsigned</span> <span class="predefined-type">char</span> key, <span class="predefined-type">int</span> x, <span class="predefined-type">int</span> y);
+<span class="directive">void</span> HSItoRGB(<span class="predefined-type">int</span> h, <span class="predefined-type">float</span> s, <span class="predefined-type">float</span> i);
+<span class="predefined-type">float</span> rad(<span class="predefined-type">float</span> a);
+
+<span class="comment">/* cores do quadrado */</span>
+GLfloat r=<span class="float">0</span><span class="float">.0</span>, g=<span class="float">0</span><span class="float">.0</span>, b=<span class="float">0</span><span class="float">.0</span>;
+<span class="predefined-type">float</span> s, i;
+<span class="predefined-type">int</span> h[<span class="integer">4</span>];
+
+<span class="predefined-type">int</span> main(<span class="predefined-type">int</span> argc, <span class="predefined-type">char</span>** argv){
+  <span class="keyword">for</span> (<span class="predefined-type">int</span> k=<span class="integer">0</span>; k&lt;<span class="integer">4</span>; k++)
+    h[k] = <span class="integer">0</span>;
+  s = <span class="float">1</span><span class="float">.0</span>;
+  i = <span class="float">1</span><span class="float">.0</span>;
+
+  glutInit(&amp;argc, argv);
+  glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
+  glutInitWindowSize (<span class="integer">256</span>, <span class="integer">256</span>);
+  glutInitWindowPosition (<span class="integer">100</span>, <span class="integer">100</span>);
+  glutCreateWindow (argv[<span class="integer">0</span>]);
+  <span class="comment">// inicia um temporizador. Após 100ms ativa a funcao timer</span>
+  glutTimerFunc(<span class="integer">100</span>, timer, <span class="integer">1</span>);
+  glClearColor(<span class="float">1</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+  <span class="comment">//glShadeModel (GL_FLAT);</span>
+  glOrtho (<span class="integer">0</span>, <span class="integer">1</span>, <span class="integer">0</span>, <span class="integer">1</span>, -<span class="integer">1</span> ,<span class="integer">1</span>);
+  glutDisplayFunc(display);
+  glutMainLoop();
+  <span class="keyword">return</span> <span class="integer">0</span>;
+}
+
+<span class="directive">void</span> timer(<span class="predefined-type">int</span> value){
+  h[<span class="integer">0</span>] = (h[<span class="integer">0</span>] + <span class="integer">80</span>)%<span class="integer">360</span>;
+  glutPostRedisplay();
+  glutSwapBuffers();
+  glutTimerFunc(<span class="integer">100</span>, timer, <span class="integer">1</span>);
+}
+
+<span class="directive">void</span> display(<span class="directive">void</span>){
+  glClear(GL_COLOR_BUFFER_BIT);
+  glBegin(GL_POLYGON);
+
+  <span class="comment">//vertice1</span>
+  HSItoRGB(h[<span class="integer">0</span>], s, i);
+  glColor3f (r, g, b);
+  glVertex2f(<span class="float">0</span><span class="float">.25</span>,<span class="float">0</span><span class="float">.25</span>);
+  <span class="comment">//vertice2</span>
+  HSItoRGB(h[<span class="integer">1</span>], s, i);
+  glColor3f (r, g, b);
+  glVertex2f(<span class="float">0</span><span class="float">.75</span>,<span class="float">0</span><span class="float">.25</span>);
+  <span class="comment">//vertice3</span>
+  HSItoRGB(h[<span class="integer">2</span>], s, i);
+  glColor3f (r, g, b);
+  glVertex2f(<span class="float">0</span><span class="float">.75</span>,<span class="float">0</span><span class="float">.75</span>);
+  <span class="comment">//vertice4</span>
+  HSItoRGB(h[<span class="integer">3</span>], s, i);
+  glColor3f (r, g, b);
+  glVertex2f(<span class="float">0</span><span class="float">.25</span>,<span class="float">0</span><span class="float">.75</span>);
+
+  glEnd();
+  glFlush();
+
+  <span class="comment">//troca das cores</span>
+  h[<span class="integer">3</span>]=h[<span class="integer">2</span>];
+  h[<span class="integer">2</span>]=h[<span class="integer">1</span>];
+  h[<span class="integer">1</span>]=h[<span class="integer">0</span>];
+}
+
+<span class="comment">//função de HSI para RGB</span>
+<span class="directive">void</span> HSItoRGB(<span class="predefined-type">int</span> h, <span class="predefined-type">float</span> s, <span class="predefined-type">float</span> i) {
+  <span class="keyword">if</span> (h&gt;= <span class="integer">0</span> &amp;&amp; h &lt; <span class="integer">120</span>)
+  {
+    b = i*(<span class="integer">1</span>-s)/<span class="integer">3</span>;
+    r = i*(<span class="integer">1</span>+(s*cos(rad(h))/cos(rad(<span class="integer">60</span>-h))))/<span class="integer">3</span>;
+    g = i*(<span class="integer">1</span>-(r+b));
+  } <span class="keyword">else</span> <span class="keyword">if</span> (h &lt; <span class="integer">240</span>)
+  {
+    h = h-<span class="integer">120</span>;
+    r = i*(<span class="integer">1</span>-s)/<span class="integer">3</span>;
+    g = i*(<span class="integer">1</span>+(s*cos(rad(h))/cos(rad(<span class="integer">60</span>-h))))/<span class="integer">3</span>;
+    b = i*(<span class="integer">1</span>-(r+g));
+  } <span class="keyword">else</span> <span class="keyword">if</span> (h &lt;= <span class="integer">360</span>)
+  {
+    h = h-<span class="integer">240</span>;
+    g = i*(<span class="integer">1</span>-s)/<span class="integer">3</span>;
+    b = i*(<span class="integer">1</span>+(s*cos(rad(h))/cos(rad(<span class="integer">60</span>-h))))/<span class="integer">3</span>;
+    r = i*(<span class="integer">1</span>-(g+b));
+  }
+}
+<span class="predefined-type">float</span> rad(<span class="predefined-type">float</span> a) {
+  <span class="keyword">return</span> ((<span class="predefined-type">float</span>)a)*M_PI/<span class="integer">18</span><span class="float">0</span><span class="float">.0</span>;
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Resultado</p>
 </li>
-</ol>
+</ul>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -578,15 +754,73 @@ table.CodeRay td.code>pre{padding:0}
 <h3 id="_desenhando_linhas_e_pontos">1.2. Desenhando linhas e pontos</h3>
 <div class="sect3">
 <h4 id="__em_quadrado_em">1.2.1. <em>quadrado</em></h4>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<div class="ulist">
+<ul>
 <li>
 <p>Código fonte: <a href="computacao_grafica/2/quadrado.c" target="_blank">quadrado.c</a></p>
 </li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c"><span class="preprocessor">#include</span> <span class="include">&lt;GL/glut.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;stdlib.h&gt;</span>
+
+<span class="directive">void</span> init(<span class="directive">void</span>);
+<span class="directive">void</span> display(<span class="directive">void</span>);
+<span class="directive">void</span> keyboard(<span class="predefined-type">unsigned</span> <span class="predefined-type">char</span> key, <span class="predefined-type">int</span> x, <span class="predefined-type">int</span> y);
+
+<span class="predefined-type">int</span> main(<span class="predefined-type">int</span> argc, <span class="predefined-type">char</span>** argv){
+  glutInit(&amp;argc, argv);
+  glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
+  glutInitWindowSize (<span class="integer">256</span>, <span class="integer">256</span>);
+  glutInitWindowPosition (<span class="integer">100</span>, <span class="integer">100</span>);
+  glutCreateWindow (<span class="string"><span class="delimiter">&quot;</span><span class="content">Desenhando um quadrado</span><span class="delimiter">&quot;</span></span>);
+  init();
+  glutDisplayFunc(display);
+  glutKeyboardFunc(keyboard);
+  glutMainLoop();
+  <span class="keyword">return</span> <span class="integer">0</span>;
+}
+
+<span class="directive">void</span> init(<span class="directive">void</span>){
+  glClearColor(<span class="float">1</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+  glOrtho (<span class="integer">0</span>, <span class="integer">256</span>, <span class="integer">0</span>, <span class="integer">256</span>, -<span class="integer">1</span> ,<span class="integer">1</span>);
+  glColor3f (<span class="float">1</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+}
+
+<span class="directive">void</span> display(<span class="directive">void</span>){
+  <span class="predefined-type">int</span> i;
+  glClear(GL_COLOR_BUFFER_BIT);
+  glBegin(GL_LINES);
+  glVertex2i(<span class="integer">30</span>, <span class="integer">226</span>);  glVertex2i(<span class="integer">226</span>,<span class="integer">226</span>);
+  glVertex2i(<span class="integer">226</span>,<span class="integer">226</span>);  glVertex2i(<span class="integer">226</span>,<span class="integer">30</span>);
+  glVertex2i(<span class="integer">226</span>,<span class="integer">30</span>);  glVertex2i(<span class="integer">30</span>,<span class="integer">30</span>);
+  glVertex2i(<span class="integer">30</span>,<span class="integer">30</span>);  glVertex2i(<span class="integer">30</span>,<span class="integer">226</span>);
+  glEnd();
+  glFlush();
+}
+
+<span class="directive">void</span> keyboard(<span class="predefined-type">unsigned</span> <span class="predefined-type">char</span> key, <span class="predefined-type">int</span> x, <span class="predefined-type">int</span> y){
+  <span class="keyword">switch</span> (key) {
+  <span class="keyword">case</span> <span class="integer">97</span>:
+    glColor3f (<span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="integer">118</span>:
+    glColor3f (<span class="float">1</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+    glutPostRedisplay();
+          <span class="keyword">break</span>;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Resultado</p>
 </li>
-</ol>
+</ul>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -596,15 +830,93 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div class="sect3">
 <h4 id="__em_algoritmo_de_bresenham_para_traçado_de_linha_em">1.2.2. <em>Algoritmo de bresenham para traçado de linha</em></h4>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<div class="ulist">
+<ul>
 <li>
 <p>Código fonte: <a href="computacao_grafica/2/bresenham.c" target="_blank">quadrado.c</a></p>
 </li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c"><span class="preprocessor">#include</span> <span class="include">&lt;GL/glut.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;stdlib.h&gt;</span>
+
+<span class="directive">void</span> init(<span class="directive">void</span>);
+<span class="directive">void</span> display(<span class="directive">void</span>);
+
+<span class="predefined-type">int</span> x1=<span class="integer">40</span>, y1=<span class="integer">200</span>, x2=<span class="integer">200</span>, y2=<span class="integer">10</span>, x, y, delta_x, delta_y, s1, s2, temp, new_e;
+<span class="predefined-type">bool</span> troca=<span class="integer">0</span>;
+
+<span class="predefined-type">int</span> main(<span class="predefined-type">int</span> argc, <span class="predefined-type">char</span>** argv){
+  glutInit(&amp;argc, argv);
+  glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
+  glutInitWindowSize (<span class="integer">256</span>, <span class="integer">256</span>);
+  glutInitWindowPosition (<span class="integer">100</span>, <span class="integer">100</span>);
+  glutCreateWindow (<span class="string"><span class="delimiter">&quot;</span><span class="content">Desenhando uma linha verde</span><span class="delimiter">&quot;</span></span>);
+  init();
+  glutDisplayFunc(display);
+  glutMainLoop();
+  <span class="keyword">return</span> <span class="integer">0</span>;
+}
+
+<span class="directive">void</span> init(<span class="directive">void</span>){
+  glClearColor(<span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+  glOrtho (<span class="integer">0</span>, <span class="integer">256</span>, <span class="integer">0</span>, <span class="integer">256</span>, -<span class="integer">1</span> ,<span class="integer">1</span>);
+}
+
+<span class="directive">void</span> display(<span class="directive">void</span>){
+  glClear(GL_COLOR_BUFFER_BIT);
+  glColor3f (<span class="float">0</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+  glBegin(GL_POINTS);
+  x = x1;
+  y = y1;
+  delta_x = abs(x2 - x1);
+  delta_y = abs(y2 - y1);
+  <span class="keyword">if</span> (x2 &lt; x1) s1=-<span class="integer">1</span>;
+  <span class="keyword">else</span> s1=<span class="integer">1</span>;
+  <span class="keyword">if</span> (y2 &lt; y1) s2=-<span class="integer">1</span>;
+  <span class="keyword">else</span> s2=<span class="integer">1</span>;
+  <span class="keyword">if</span>(delta_y &gt; delta_x){
+    temp = delta_x;
+    delta_x = delta_y;
+    delta_y = temp;
+    troca = <span class="integer">1</span>;
+  }
+  <span class="keyword">else</span>{
+    troca = <span class="integer">0</span>;
+  }
+  new_e = <span class="integer">2</span>*delta_y - delta_x;
+  <span class="keyword">for</span>(<span class="predefined-type">int</span> i=<span class="integer">1</span>; i&lt;= delta_x; i++){
+    glVertex2i(x,y);
+    <span class="keyword">while</span> (new_e &gt;= <span class="integer">0</span>){
+      <span class="keyword">if</span>(troca == <span class="integer">1</span>){
+        x = x + s1;
+      }
+      <span class="keyword">else</span>{
+        y = y + s2;
+      }
+      new_e = new_e - <span class="integer">2</span>*delta_x;
+    }
+    <span class="keyword">if</span>(troca == <span class="integer">1</span>){
+      y = y + s2;
+    }
+    <span class="keyword">else</span>{
+      x = x + s1;
+    }
+    new_e= new_e + <span class="integer">2</span>*delta_y;
+  }
+  glEnd();
+  glFlush();
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Resultado</p>
 </li>
-</ol>
+</ul>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -614,15 +926,83 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div class="sect3">
 <h4 id="__em_algoritmo_de_bresenham_para_circunferência_em">1.2.3. <em>Algoritmo de bresenham para circunferência</em></h4>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<div class="ulist">
+<ul>
 <li>
 <p>Código fonte: <a href="computacao_grafica/2/circle.c" target="_blank">circle.c</a></p>
 </li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c"><span class="preprocessor">#include</span> <span class="include">&lt;GL/glut.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;stdlib.h&gt;</span>
+
+<span class="directive">void</span> init(<span class="directive">void</span>);
+<span class="directive">void</span> pontosDaCircunferencia(<span class="predefined-type">int</span>, <span class="predefined-type">int</span>);
+<span class="directive">void</span> display(<span class="directive">void</span>);
+
+<span class="predefined-type">int</span> x0=<span class="integer">128</span>, y0=<span class="integer">128</span>, raio=<span class="integer">50</span>, d, x, y;
+
+<span class="predefined-type">int</span> main(<span class="predefined-type">int</span> argc, <span class="predefined-type">char</span>** argv){
+  glutInit(&amp;argc, argv);
+  glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
+  glutInitWindowSize (<span class="integer">256</span>, <span class="integer">256</span>);
+  glutInitWindowPosition (<span class="integer">100</span>, <span class="integer">100</span>);
+  glutCreateWindow (<span class="string"><span class="delimiter">&quot;</span><span class="content">Desenhando uma circunferência</span><span class="delimiter">&quot;</span></span>);
+  init();
+  glutDisplayFunc(display);
+  glutMainLoop();
+  <span class="keyword">return</span> <span class="integer">0</span>;
+}
+
+<span class="directive">void</span> init(<span class="directive">void</span>){
+  glClearColor(<span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+  glOrtho (<span class="integer">0</span>, <span class="integer">256</span>, <span class="integer">0</span>, <span class="integer">256</span>, -<span class="integer">1</span> ,<span class="integer">1</span>);
+}
+
+<span class="directive">void</span> pontosDaCircunferencia(<span class="predefined-type">int</span> x,<span class="predefined-type">int</span> y){
+  glVertex2i(x+x0,y+y0);
+  glVertex2i(y+x0,x+y0);
+  glVertex2i(-x+x0,y+y0);
+  glVertex2i(-y+x0,x+y0);
+  glVertex2i(-x+x0,-y+y0);
+  glVertex2i(-y+x0,-x+y0);
+  glVertex2i(x+x0,-y+y0);
+  glVertex2i(y+x0,-x+y0);
+}
+
+<span class="directive">void</span> display(<span class="directive">void</span>){
+  glClear(GL_COLOR_BUFFER_BIT);
+  glColor3f (<span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+  glBegin(GL_POINTS);
+  x = <span class="integer">0</span>;
+  y = raio;
+  d = <span class="integer">1</span> - y;
+  pontosDaCircunferencia(x,y);
+  <span class="keyword">while</span>(y &gt; x){
+    <span class="keyword">if</span>(d &lt; <span class="integer">0</span>){
+      d = d + <span class="integer">2</span>*x + <span class="integer">3</span>;
+      x = x + <span class="integer">1</span>;
+    }
+    <span class="keyword">else</span>{
+      d = d + <span class="integer">2</span>*(x-y) + <span class="integer">5</span>;
+      x = x + <span class="integer">1</span>;
+      y = y - <span class="integer">1</span>;
+    }
+    pontosDaCircunferencia(x,y);
+  }
+  glEnd();
+  glFlush();
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Resultado</p>
 </li>
-</ol>
+</ul>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -635,15 +1015,131 @@ table.CodeRay td.code>pre{padding:0}
 <h3 id="_preenchimento_de_regiões">1.3. Preenchimento de regiões</h3>
 <div class="sect3">
 <h4 id="__em_selecao_em">1.3.1. <em>selecao</em></h4>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<div class="ulist">
+<ul>
 <li>
 <p>Código fonte: <a href="computacao_grafica/3/selecao.c" target="_blank">selecao.c</a></p>
 </li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c"><span class="preprocessor">#include</span> <span class="include">&lt;GL/glut.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;stdlib.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;stdio.h&gt;</span>
+
+GLfloat rL[<span class="integer">4</span>], gL[<span class="integer">4</span>], bL[<span class="integer">4</span>], rF[<span class="integer">4</span>], gF[<span class="integer">4</span>], bF[<span class="integer">4</span>];
+GLint x[<span class="integer">4</span>], y[<span class="integer">4</span>];
+<span class="predefined-type">bool</span> flagF;
+
+<span class="directive">void</span> init(<span class="directive">void</span>);
+<span class="directive">void</span> display(<span class="directive">void</span>);
+<span class="directive">void</span> defineColor(GLint, GLint);
+<span class="directive">void</span> draw();
+<span class="directive">void</span> keyboard(<span class="predefined-type">unsigned</span> <span class="predefined-type">char</span> key, <span class="predefined-type">int</span> x, <span class="predefined-type">int</span> y);
+<span class="directive">void</span> mouse(<span class="predefined-type">int</span> button, <span class="predefined-type">int</span> state, <span class="predefined-type">int</span> x, <span class="predefined-type">int</span> y);
+
+<span class="predefined-type">int</span> main(<span class="predefined-type">int</span> argc, <span class="predefined-type">char</span>** argv){
+  glutInit(&amp;argc, argv);
+  glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
+  glutInitWindowSize (<span class="integer">256</span>, <span class="integer">256</span>);
+  glutInitWindowPosition (<span class="integer">100</span>, <span class="integer">100</span>);
+  glutCreateWindow (<span class="string"><span class="delimiter">&quot;</span><span class="content">Quadradinhos</span><span class="delimiter">&quot;</span></span>);
+  init();
+  glutDisplayFunc(display);
+  glutKeyboardFunc(keyboard);
+  glutMouseFunc(mouse);
+  glutMainLoop();
+  <span class="keyword">return</span> <span class="integer">0</span>;
+}
+
+<span class="directive">void</span> init(<span class="directive">void</span>){
+  glClearColor(<span class="float">1</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+  glOrtho (<span class="integer">0</span>, <span class="integer">256</span>, <span class="integer">0</span>, <span class="integer">256</span>, -<span class="integer">1</span> ,<span class="integer">1</span>);
+  <span class="keyword">for</span> (<span class="predefined-type">int</span> i=<span class="integer">0</span>; i&lt;<span class="integer">4</span>; i++){
+    rL[i]=<span class="float">0</span><span class="float">.0</span>; gL[i]=<span class="float">0</span><span class="float">.0</span>; bL[i]=<span class="float">0</span><span class="float">.0</span>;
+    rF[i]=<span class="float">1</span><span class="float">.0</span>; gF[i]=<span class="float">1</span><span class="float">.0</span>; bF[i]=<span class="float">0</span><span class="float">.0</span>;
+  }
+  x[<span class="integer">0</span>]=<span class="integer">30</span>; x[<span class="integer">1</span>]=<span class="integer">143</span>; x[<span class="integer">2</span>]=<span class="integer">30</span>; x[<span class="integer">3</span>]=<span class="integer">143</span>;
+  y[<span class="integer">0</span>]=<span class="integer">226</span>; y[<span class="integer">1</span>]=<span class="integer">226</span>; y[<span class="integer">2</span>]=<span class="integer">113</span>; y[<span class="integer">3</span>]=<span class="integer">113</span>;
+  flagF=<span class="predefined-constant">true</span>;
+}
+
+<span class="directive">void</span> display(<span class="directive">void</span>){
+  glClear(GL_COLOR_BUFFER_BIT);
+  glDisable(GL_POLYGON_STIPPLE);
+
+  draw();
+
+  glFlush();
+  glutSwapBuffers();
+}
+
+<span class="directive">void</span> keyboard(<span class="predefined-type">unsigned</span> <span class="predefined-type">char</span> key, <span class="predefined-type">int</span> x, <span class="predefined-type">int</span> y){
+  <span class="keyword">switch</span> (key) {
+    <span class="keyword">case</span> <span class="char">'b'</span>:
+      flagF=<span class="predefined-constant">false</span>;
+      <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="char">'f'</span>:
+      flagF=<span class="predefined-constant">true</span>;
+      <span class="keyword">break</span>;
+  }
+}
+
+<span class="directive">void</span> mouse(<span class="predefined-type">int</span> button, <span class="predefined-type">int</span> state, <span class="predefined-type">int</span> px, <span class="predefined-type">int</span> py){
+  <span class="keyword">switch</span> (button){
+  <span class="keyword">case</span> GLUT_LEFT_BUTTON:
+  <span class="keyword">if</span> (state == GLUT_DOWN){
+    defineColor(px,(py*-<span class="integer">1</span>)+<span class="integer">256</span>);
+  }
+  <span class="keyword">break</span>;
+  }
+}
+
+<span class="directive">void</span> draw(){
+  <span class="keyword">for</span> (<span class="predefined-type">int</span> i=<span class="integer">0</span>; i&lt;<span class="integer">4</span>; i++){
+    glPolygonMode(GL_BACK, GL_FILL);
+    glColor3f(rF[i], gF[i], bF[i]);
+    glBegin(GL_POLYGON);
+    glVertex2i(x[i],y[i]);  glVertex2i(x[i]+<span class="integer">83</span>,y[i]);
+    glVertex2i(x[i]+<span class="integer">83</span>,y[i]-<span class="integer">83</span>); glVertex2i(x[i],y[i]-<span class="integer">83</span>);
+    glEnd();
+
+    glPolygonMode(GL_BACK, GL_LINE);
+    glColor3f(rL[i], gL[i], bL[i]);
+    glBegin(GL_POLYGON);
+    glVertex2i(x[i],y[i]);  glVertex2i(x[i]+<span class="integer">83</span>,y[i]);
+    glVertex2i(x[i]+<span class="integer">83</span>,y[i]-<span class="integer">83</span>); glVertex2i(x[i],y[i]-<span class="integer">83</span>);
+    glEnd();
+  }
+}
+
+<span class="directive">void</span> defineColor(GLint px, GLint py){
+  <span class="keyword">for</span> (<span class="predefined-type">int</span> i=<span class="integer">0</span>; i&lt;<span class="integer">4</span>; i++){
+    <span class="keyword">if</span> (px&gt;=x[i] &amp;&amp; px&lt;=x[i]+<span class="integer">83</span> &amp;&amp; py&gt;=y[i]-<span class="integer">83</span> &amp;&amp; py&lt;=y[i]){
+      <span class="keyword">if</span> (flagF==<span class="predefined-constant">true</span>){
+        rF[i]=(GLfloat)rand()/(RAND_MAX+<span class="float">1</span><span class="float">.0</span>);
+        gF[i]=(GLfloat)rand()/(RAND_MAX+<span class="float">1</span><span class="float">.0</span>);
+        bF[i]=(GLfloat)rand()/(RAND_MAX+<span class="float">1</span><span class="float">.0</span>);
+        glutPostRedisplay();
+      }
+      <span class="keyword">else</span>{
+        rL[i]=(GLfloat)rand()/(RAND_MAX+<span class="float">1</span><span class="float">.0</span>);
+        gL[i]=(GLfloat)rand()/(RAND_MAX+<span class="float">1</span><span class="float">.0</span>);
+        bL[i]=(GLfloat)rand()/(RAND_MAX+<span class="float">1</span><span class="float">.0</span>);
+        glutPostRedisplay();
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Resultado</p>
 </li>
-</ol>
+</ul>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -653,31 +1149,242 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div class="sect3">
 <h4 id="__em_selecaosinglebuffer_em">1.3.2. <em>selecaoSingleBuffer</em></h4>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<div class="ulist">
+<ul>
 <li>
 <p>Código fonte: <a href="computacao_grafica/3/selecaoSingleBuffer.c" target="_blank">selecao.c</a></p>
 </li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c"><span class="preprocessor">#include</span> <span class="include">&lt;GL/glut.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;stdlib.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;stdio.h&gt;</span>
+
+GLfloat rL[<span class="integer">4</span>], gL[<span class="integer">4</span>], bL[<span class="integer">4</span>], rF[<span class="integer">4</span>], gF[<span class="integer">4</span>], bF[<span class="integer">4</span>];
+GLint x[<span class="integer">4</span>], y[<span class="integer">4</span>];
+<span class="predefined-type">bool</span> flagF;
+
+<span class="directive">void</span> init(<span class="directive">void</span>);
+<span class="directive">void</span> display(<span class="directive">void</span>);
+<span class="directive">void</span> defineColor(GLint, GLint);
+<span class="directive">void</span> draw();
+<span class="directive">void</span> keyboard(<span class="predefined-type">unsigned</span> <span class="predefined-type">char</span> key, <span class="predefined-type">int</span> x, <span class="predefined-type">int</span> y);
+<span class="directive">void</span> mouse(<span class="predefined-type">int</span> button, <span class="predefined-type">int</span> state, <span class="predefined-type">int</span> x, <span class="predefined-type">int</span> y);
+
+<span class="predefined-type">int</span> main(<span class="predefined-type">int</span> argc, <span class="predefined-type">char</span>** argv){
+  glutInit(&amp;argc, argv);
+  glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
+  glutInitWindowSize (<span class="integer">256</span>, <span class="integer">256</span>);
+  glutInitWindowPosition (<span class="integer">100</span>, <span class="integer">100</span>);
+  glutCreateWindow (<span class="string"><span class="delimiter">&quot;</span><span class="content">Quadradinhos</span><span class="delimiter">&quot;</span></span>);
+  init();
+  glutDisplayFunc(display);
+  glutKeyboardFunc(keyboard);
+  glutMouseFunc(mouse);
+  glutMainLoop();
+  <span class="keyword">return</span> <span class="integer">0</span>;
+}
+
+<span class="directive">void</span> init(<span class="directive">void</span>){
+  glClearColor(<span class="float">1</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+  glOrtho (<span class="integer">0</span>, <span class="integer">256</span>, <span class="integer">0</span>, <span class="integer">256</span>, -<span class="integer">1</span> ,<span class="integer">1</span>);
+  <span class="keyword">for</span> (<span class="predefined-type">int</span> i=<span class="integer">0</span>; i&lt;<span class="integer">4</span>; i++){
+    rL[i]=<span class="float">0</span><span class="float">.0</span>; gL[i]=<span class="float">0</span><span class="float">.0</span>; bL[i]=<span class="float">0</span><span class="float">.0</span>;
+    rF[i]=<span class="float">1</span><span class="float">.0</span>; gF[i]=<span class="float">1</span><span class="float">.0</span>; bF[i]=<span class="float">0</span><span class="float">.0</span>;
+  }
+  x[<span class="integer">0</span>]=<span class="integer">30</span>; x[<span class="integer">1</span>]=<span class="integer">143</span>; x[<span class="integer">2</span>]=<span class="integer">30</span>; x[<span class="integer">3</span>]=<span class="integer">143</span>;
+  y[<span class="integer">0</span>]=<span class="integer">226</span>; y[<span class="integer">1</span>]=<span class="integer">226</span>; y[<span class="integer">2</span>]=<span class="integer">113</span>; y[<span class="integer">3</span>]=<span class="integer">113</span>;
+  flagF=<span class="predefined-constant">true</span>;
+}
+
+<span class="directive">void</span> display(<span class="directive">void</span>){
+  glClear(GL_COLOR_BUFFER_BIT);
+  glDisable(GL_POLYGON_STIPPLE);
+
+  draw();
+
+  glFlush();
+}
+
+<span class="directive">void</span> keyboard(<span class="predefined-type">unsigned</span> <span class="predefined-type">char</span> key, <span class="predefined-type">int</span> x, <span class="predefined-type">int</span> y){
+  <span class="keyword">switch</span> (key) {
+    <span class="keyword">case</span> <span class="char">'b'</span>:
+      flagF=<span class="predefined-constant">false</span>;
+      <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="char">'f'</span>:
+      flagF=<span class="predefined-constant">true</span>;
+      <span class="keyword">break</span>;
+  }
+}
+
+<span class="directive">void</span> mouse(<span class="predefined-type">int</span> button, <span class="predefined-type">int</span> state, <span class="predefined-type">int</span> px, <span class="predefined-type">int</span> py){
+  <span class="keyword">switch</span> (button){
+  <span class="keyword">case</span> GLUT_LEFT_BUTTON:
+  <span class="keyword">if</span> (state == GLUT_DOWN){
+    defineColor(px,(py*-<span class="integer">1</span>)+<span class="integer">256</span>);
+  }
+  <span class="keyword">break</span>;
+  }
+}
+
+<span class="directive">void</span> draw(){
+  <span class="keyword">for</span> (<span class="predefined-type">int</span> i=<span class="integer">0</span>; i&lt;<span class="integer">4</span>; i++){
+    glPolygonMode(GL_BACK, GL_FILL);
+    glColor3f(rF[i], gF[i], bF[i]);
+    glBegin(GL_POLYGON);
+    glVertex2i(x[i],y[i]);  glVertex2i(x[i]+<span class="integer">83</span>,y[i]);
+    glVertex2i(x[i]+<span class="integer">83</span>,y[i]-<span class="integer">83</span>); glVertex2i(x[i],y[i]-<span class="integer">83</span>);
+    glEnd();
+
+    glPolygonMode(GL_BACK, GL_LINE);
+    glColor3f(rL[i], gL[i], bL[i]);
+    glBegin(GL_POLYGON);
+    glVertex2i(x[i],y[i]);  glVertex2i(x[i]+<span class="integer">83</span>,y[i]);
+    glVertex2i(x[i]+<span class="integer">83</span>,y[i]-<span class="integer">83</span>); glVertex2i(x[i],y[i]-<span class="integer">83</span>);
+    glEnd();
+  }
+}
+
+<span class="directive">void</span> defineColor(GLint px, GLint py){
+  <span class="keyword">for</span> (<span class="predefined-type">int</span> i=<span class="integer">0</span>; i&lt;<span class="integer">4</span>; i++){
+    <span class="keyword">if</span> (px&gt;=x[i] &amp;&amp; px&lt;=x[i]+<span class="integer">83</span> &amp;&amp; py&gt;=y[i]-<span class="integer">83</span> &amp;&amp; py&lt;=y[i]){
+      <span class="keyword">if</span> (flagF==<span class="predefined-constant">true</span>){
+        rF[i]=(GLfloat)rand()/(RAND_MAX+<span class="float">1</span><span class="float">.0</span>);
+        gF[i]=(GLfloat)rand()/(RAND_MAX+<span class="float">1</span><span class="float">.0</span>);
+        bF[i]=(GLfloat)rand()/(RAND_MAX+<span class="float">1</span><span class="float">.0</span>);
+        glutPostRedisplay();
+      }
+      <span class="keyword">else</span>{
+        rL[i]=(GLfloat)rand()/(RAND_MAX+<span class="float">1</span><span class="float">.0</span>);
+        gL[i]=(GLfloat)rand()/(RAND_MAX+<span class="float">1</span><span class="float">.0</span>);
+        bL[i]=(GLfloat)rand()/(RAND_MAX+<span class="float">1</span><span class="float">.0</span>);
+        glutPostRedisplay();
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Resultado</p>
 </li>
-</ol>
+</ul>
 </div>
+<div class="exampleblock">
+<div class="content">
 <div class="paragraph">
 <p>Não ocorreram mudanças em relação ao código anterior.</p>
 </div>
 </div>
+</div>
+</div>
 <div class="sect3">
 <h4 id="__em_padrao_em">1.3.3. <em>padrao</em></h4>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<div class="ulist">
+<ul>
 <li>
 <p>Código fonte: <a href="computacao_grafica/3/padrao.c" target="_blank">padrao.c</a></p>
 </li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c"><span class="preprocessor">#include</span> <span class="include">&lt;GL/glut.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;stdlib.h&gt;</span>
+
+GLubyte tux[] = {
+ <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x80</span>, <span class="hex">0x08</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x80</span>, <span class="hex">0x08</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x80</span>, <span class="hex">0x08</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x80</span>, <span class="hex">0x08</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x80</span>, <span class="hex">0x08</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x80</span>, <span class="hex">0x08</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x80</span>, <span class="hex">0x08</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x80</span>, <span class="hex">0x08</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x80</span>, <span class="hex">0x08</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x80</span>, <span class="hex">0x08</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x80</span>, <span class="hex">0x0F</span>, <span class="hex">0xF8</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x80</span>, <span class="hex">0x08</span>, <span class="hex">0x08</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x80</span>, <span class="hex">0x08</span>, <span class="hex">0x08</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x80</span>, <span class="hex">0x08</span>, <span class="hex">0x08</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x80</span>, <span class="hex">0x08</span>, <span class="hex">0x08</span>,
+ <span class="hex">0x3F</span>, <span class="hex">0xFE</span>, <span class="hex">0x0F</span>, <span class="hex">0xF8</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>,
+ <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>, <span class="hex">0x00</span>
+};
+
+GLfloat r,g,b;
+
+<span class="directive">void</span> init(<span class="directive">void</span>);
+<span class="directive">void</span> display(<span class="directive">void</span>);
+
+<span class="predefined-type">int</span> main(<span class="predefined-type">int</span> argc, <span class="predefined-type">char</span>** argv){
+  glutInit(&amp;argc, argv);
+  glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
+  glutInitWindowSize (<span class="integer">300</span>, <span class="integer">300</span>);
+  glutInitWindowPosition (<span class="integer">100</span>, <span class="integer">100</span>);
+  glutCreateWindow (<span class="string"><span class="delimiter">&quot;</span><span class="content">Padrão</span><span class="delimiter">&quot;</span></span>);
+  init();
+  glutDisplayFunc(display);
+  glutMainLoop();
+  <span class="keyword">return</span> <span class="integer">0</span>;
+}
+
+<span class="directive">void</span> init(<span class="directive">void</span>){
+  glClearColor(<span class="float">1</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+  glOrtho (<span class="integer">0</span>, <span class="integer">300</span>, <span class="integer">0</span>, <span class="integer">300</span>, -<span class="integer">1</span> ,<span class="integer">1</span>);
+  r=<span class="integer">0</span>; g=<span class="integer">0</span>; b=<span class="integer">1</span>;
+}
+
+<span class="directive">void</span> display(<span class="directive">void</span>){
+  <span class="predefined-type">int</span> i;
+  glClear(GL_COLOR_BUFFER_BIT);
+  glDisable(GL_POLYGON_STIPPLE);
+
+  glPolygonMode(GL_BACK, GL_FILL);
+  glColor3f(r, g, b);
+  glBegin(GL_POLYGON);
+  glVertex2i(<span class="integer">50</span>,<span class="integer">150</span>); glVertex2i(<span class="integer">50</span>+<span class="integer">200</span>/<span class="integer">3</span>,<span class="integer">250</span>);
+  glVertex2i(<span class="integer">50</span>+<span class="integer">2</span>*<span class="integer">200</span>/<span class="integer">3</span>,<span class="integer">250</span>); glVertex2i(<span class="integer">250</span>,<span class="integer">150</span>);
+  glVertex2i(<span class="integer">50</span>+<span class="integer">2</span>*<span class="integer">200</span>/<span class="integer">3</span>,<span class="integer">50</span>); glVertex2i(<span class="integer">50</span>+<span class="integer">200</span>/<span class="integer">3</span>,<span class="integer">50</span>);
+  glEnd();
+
+  glEnable(GL_POLYGON_STIPPLE);
+  glColor3f(<span class="float">1</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+  glPolygonStipple(tux);
+  glBegin(GL_POLYGON);
+  glVertex2i(<span class="integer">50</span>,<span class="integer">150</span>); glVertex2i(<span class="integer">50</span>+<span class="integer">200</span>/<span class="integer">3</span>,<span class="integer">50</span>);
+  glVertex2i(<span class="integer">50</span>+<span class="integer">2</span>*<span class="integer">200</span>/<span class="integer">3</span>,<span class="integer">50</span>); glVertex2i(<span class="integer">250</span>,<span class="integer">150</span>);
+  glVertex2i(<span class="integer">50</span>+<span class="integer">2</span>*<span class="integer">200</span>/<span class="integer">3</span>,<span class="integer">250</span>); glVertex2i(<span class="integer">50</span>+<span class="integer">200</span>/<span class="integer">3</span>,<span class="integer">250</span>);
+  glEnd();
+  glFlush();
+  glutSwapBuffers();
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Resultado</p>
 </li>
-</ol>
+</ul>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -690,15 +1397,161 @@ table.CodeRay td.code>pre{padding:0}
 <h3 id="_transformações">1.4. Transformações</h3>
 <div class="sect3">
 <h4 id="__em_braco_garra_em">1.4.1. <em>braco_garra</em></h4>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<div class="ulist">
+<ul>
 <li>
 <p>Código fonte: <a href="computacao_grafica/4/braco_garra.c" target="_blank">braco_garra.c</a></p>
 </li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c"><span class="preprocessor">#include</span> <span class="include">&lt;GL/glut.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;stdlib.h&gt;</span>
+
+<span class="directive">static</span> <span class="predefined-type">int</span> shoulder = <span class="integer">0</span>, elbow = <span class="integer">0</span>, thumb = <span class="integer">0</span>, index = <span class="integer">0</span>, middle = <span class="integer">0</span>;
+
+<span class="directive">void</span> init(<span class="directive">void</span>){
+  glClearColor (<span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+}
+
+<span class="directive">void</span> display(<span class="directive">void</span>){
+  glClear (GL_COLOR_BUFFER_BIT);
+  glPushMatrix();
+
+  <span class="comment">/* origem posicionada no ombro */</span>
+  glTranslatef (-<span class="float">1</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+  glRotatef ((GLfloat) shoulder, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+
+  <span class="comment">/* origem posicionada no centro do braço */</span>
+  glTranslatef (<span class="float">1</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+  glPushMatrix();
+  glScalef (<span class="float">2</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.4</span>, <span class="float">1</span><span class="float">.0</span>);
+  glutWireCube (<span class="float">1</span><span class="float">.0</span>);
+  glPopMatrix();
+
+  <span class="comment">/* origem posicionada no cotovelo */</span>
+  glTranslatef (<span class="float">1</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+  glRotatef ((GLfloat) elbow, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+  glTranslatef (<span class="float">1</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+  glPushMatrix();
+  glScalef (<span class="float">2</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.4</span>, <span class="float">1</span><span class="float">.0</span>);
+  glutWireCube (<span class="float">1</span><span class="float">.0</span>);
+  glPopMatrix();
+
+        <span class="comment">/* Thumb */</span>
+        glTranslatef (<span class="float">1</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+        glPushMatrix();
+        glTranslatef (<span class="float">0</span><span class="float">.0</span>, -<span class="float">0</span><span class="float">.2</span>, <span class="float">0</span><span class="float">.0</span>);
+        glRotatef ((GLfloat) thumb, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+        glTranslatef (<span class="float">0</span><span class="float">.25</span>, <span class="float">0</span><span class="float">.075</span>, <span class="float">0</span><span class="float">.125</span>);
+        glScalef (<span class="float">0</span><span class="float">.5</span>, <span class="float">0</span><span class="float">.15</span>, <span class="float">0</span><span class="float">.25</span>);
+        glutWireCube (<span class="float">1</span><span class="float">.0</span>);
+  glPopMatrix();
+
+        <span class="comment">/* Index */</span>
+        glPushMatrix();
+        glTranslatef (<span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.2</span>, <span class="float">0</span><span class="float">.5</span>);
+  glRotatef ((GLfloat) index, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+  glTranslatef (<span class="float">0</span><span class="float">.25</span>, -<span class="float">0</span><span class="float">.075</span>, -<span class="float">0</span><span class="float">.125</span>);
+  glScalef (<span class="float">0</span><span class="float">.5</span>, <span class="float">0</span><span class="float">.15</span>, <span class="float">0</span><span class="float">.25</span>);
+  glutWireCube (<span class="float">1</span><span class="float">.0</span>);
+  glPopMatrix();
+
+        <span class="comment">/* Middle */</span>
+  glTranslatef (<span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.2</span>, -<span class="float">0</span><span class="float">.5</span>);
+  glRotatef ((GLfloat) middle, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+  glTranslatef (<span class="float">0</span><span class="float">.25</span>, -<span class="float">0</span><span class="float">.075</span>, <span class="float">0</span><span class="float">.125</span>);
+  glScalef (<span class="float">0</span><span class="float">.5</span>, <span class="float">0</span><span class="float">.15</span>, <span class="float">0</span><span class="float">.25</span>);
+  glutWireCube (<span class="float">1</span><span class="float">.0</span>);
+  glPopMatrix();
+
+  <span class="comment">/* origem volta para o sistema de coordenadas original */</span>
+  glPopMatrix();
+  glutSwapBuffers();
+}
+
+<span class="directive">void</span> reshape (<span class="predefined-type">int</span> w, <span class="predefined-type">int</span> h){
+  glViewport (<span class="integer">0</span>, <span class="integer">0</span>, (GLsizei) w, (GLsizei) h);
+  glMatrixMode (GL_PROJECTION);
+  glLoadIdentity ();
+  gluPerspective(<span class="integer">6</span><span class="float">5</span><span class="float">.0</span>, (GLfloat) w/(GLfloat) h, <span class="float">1</span><span class="float">.0</span>, <span class="integer">2</span><span class="float">0</span><span class="float">.0</span>);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  glTranslatef (<span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, -<span class="integer">1</span><span class="float">0</span><span class="float">.0</span>);
+}
+
+<span class="directive">void</span> keyboard (<span class="predefined-type">unsigned</span> <span class="predefined-type">char</span> key, <span class="predefined-type">int</span> x, <span class="predefined-type">int</span> y){
+  <span class="keyword">switch</span> (key) {
+  <span class="keyword">case</span> <span class="char">'s'</span>:
+    shoulder = (shoulder + <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="char">'S'</span>:
+    shoulder = (shoulder - <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="char">'e'</span>:
+    elbow = (elbow + <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="char">'E'</span>:
+    elbow = (elbow - <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="char">'p'</span>:
+    thumb = (thumb + <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="char">'P'</span>:
+    thumb = (thumb - <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="char">'i'</span>:
+    index = (index + <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="char">'I'</span>:
+    index = (index - <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="char">'m'</span>:
+    middle = (middle + <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="char">'M'</span>:
+    middle = (middle - <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="integer">27</span>:
+    exit(<span class="integer">0</span>);
+    <span class="keyword">break</span>;
+  <span class="keyword">default</span>:
+    <span class="keyword">break</span>;
+  }
+}
+
+<span class="predefined-type">int</span> main(<span class="predefined-type">int</span> argc, <span class="predefined-type">char</span>** argv){
+  glutInit(&amp;argc, argv);
+  glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
+  glutInitWindowSize (<span class="integer">500</span>, <span class="integer">500</span>);
+  glutInitWindowPosition (<span class="integer">100</span>, <span class="integer">100</span>);
+  glutCreateWindow (argv[<span class="integer">0</span>]);
+  init ();
+  glutDisplayFunc(display);
+  glutReshapeFunc(reshape);
+  glutKeyboardFunc(keyboard);
+  glutMainLoop();
+  <span class="keyword">return</span> <span class="integer">0</span>;
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Resultado</p>
 </li>
-</ol>
+</ul>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -708,15 +1561,178 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div class="sect3">
 <h4 id="__em_braco_garra_3d_em">1.4.2. <em>braco_garra_3d</em></h4>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<div class="ulist">
+<ul>
 <li>
 <p>Código fonte: <a href="computacao_grafica/4/braco_garra_3d.c" target="_blank">braco_garra_3d.c</a></p>
 </li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c"><span class="preprocessor">#include</span> <span class="include">&lt;GL/glut.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;stdlib.h&gt;</span>
+
+<span class="directive">static</span> <span class="predefined-type">int</span> shoulder = <span class="integer">0</span>, elbow = <span class="integer">0</span>, thumb = <span class="integer">0</span>, index = <span class="integer">0</span>, middle = <span class="integer">0</span>, base = <span class="integer">0</span>;
+
+<span class="directive">void</span> init(<span class="directive">void</span>){
+  glClearColor (<span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+        glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_CULL_FACE);
+}
+
+<span class="directive">void</span> display(<span class="directive">void</span>){
+  glClear (GL_COLOR_BUFFER_BIT);
+  glPushMatrix();
+
+  <span class="comment">/* origem posicionada no ombro */</span>
+  glTranslatef (-<span class="float">1</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+        glRotatef ((GLfloat) base, <span class="float">0</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+  glRotatef ((GLfloat) shoulder, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+
+  <span class="comment">/* origem posicionada no centro do braço */</span>
+  glTranslatef (<span class="float">1</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+  glPushMatrix();
+  glScalef (<span class="float">2</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.4</span>, <span class="float">1</span><span class="float">.0</span>);
+        glColor3f(<span class="integer">1</span>,<span class="integer">0</span>,<span class="integer">0</span>);
+  glutSolidCube(<span class="float">1</span><span class="float">.0</span>);
+  glPopMatrix();
+
+  <span class="comment">/* origem posicionada no cotovelo */</span>
+  glTranslatef (<span class="float">1</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+  glRotatef ((GLfloat) elbow, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+  glTranslatef (<span class="float">1</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+  glPushMatrix();
+  glScalef (<span class="float">2</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.4</span>, <span class="float">1</span><span class="float">.0</span>);
+        glColor3f(<span class="integer">0</span>,<span class="integer">1</span>,<span class="integer">0</span>);
+  glutSolidCube(<span class="float">1</span><span class="float">.0</span>);
+  glPopMatrix();
+
+        <span class="comment">/* Thumb */</span>
+        glTranslatef (<span class="float">1</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>);
+        glPushMatrix();
+        glTranslatef (<span class="float">0</span><span class="float">.0</span>, -<span class="float">0</span><span class="float">.2</span>, <span class="float">0</span><span class="float">.0</span>);
+        glRotatef ((GLfloat) thumb, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+        glTranslatef (<span class="float">0</span><span class="float">.25</span>, <span class="float">0</span><span class="float">.075</span>, <span class="integer">0</span>);
+        glScalef (<span class="float">0</span><span class="float">.5</span>, <span class="float">0</span><span class="float">.15</span>, <span class="float">0</span><span class="float">.25</span>);
+        glColor3f(<span class="integer">1</span>,<span class="integer">1</span>,<span class="integer">0</span>);
+        glutSolidCube(<span class="float">1</span><span class="float">.0</span>);
+  glPopMatrix();
+
+        <span class="comment">/* Index */</span>
+        glPushMatrix();
+        glTranslatef (<span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.2</span>, <span class="float">0</span><span class="float">.5</span>);
+  glRotatef ((GLfloat) index, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+  glTranslatef (<span class="float">0</span><span class="float">.25</span>, -<span class="float">0</span><span class="float">.075</span>, -<span class="float">0</span><span class="float">.125</span>);
+  glScalef (<span class="float">0</span><span class="float">.5</span>, <span class="float">0</span><span class="float">.15</span>, <span class="float">0</span><span class="float">.25</span>);
+        glColor3f(<span class="integer">0</span>,<span class="integer">0</span>,<span class="integer">1</span>);
+  glutSolidCube(<span class="float">1</span><span class="float">.0</span>);
+  glPopMatrix();
+
+        <span class="comment">/* Middle */</span>
+  glTranslatef (<span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.2</span>, -<span class="float">0</span><span class="float">.5</span>);
+  glRotatef ((GLfloat) middle, <span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, <span class="float">1</span><span class="float">.0</span>);
+  glTranslatef (<span class="float">0</span><span class="float">.25</span>, -<span class="float">0</span><span class="float">.075</span>, <span class="float">0</span><span class="float">.125</span>);
+  glScalef (<span class="float">0</span><span class="float">.5</span>, <span class="float">0</span><span class="float">.15</span>, <span class="float">0</span><span class="float">.25</span>);
+        glColor3f(<span class="integer">0</span>,<span class="integer">1</span>,<span class="integer">1</span>);
+  glutSolidCube(<span class="float">1</span><span class="float">.0</span>);
+  glPopMatrix();
+
+  <span class="comment">/* origem volta para o sistema de coordenadas original */</span>
+  glPopMatrix();
+  glutSwapBuffers();
+}
+
+<span class="directive">void</span> reshape (<span class="predefined-type">int</span> w, <span class="predefined-type">int</span> h){
+  glViewport (<span class="integer">0</span>, <span class="integer">0</span>, (GLsizei) w, (GLsizei) h);
+  glMatrixMode (GL_PROJECTION);
+  glLoadIdentity ();
+  gluPerspective(<span class="integer">6</span><span class="float">5</span><span class="float">.0</span>, (GLfloat) w/(GLfloat) h, <span class="float">1</span><span class="float">.0</span>, <span class="integer">2</span><span class="float">0</span><span class="float">.0</span>);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  glTranslatef (<span class="float">0</span><span class="float">.0</span>, <span class="float">0</span><span class="float">.0</span>, -<span class="integer">1</span><span class="float">0</span><span class="float">.0</span>);
+}
+
+<span class="directive">void</span> keyboard (<span class="predefined-type">unsigned</span> <span class="predefined-type">char</span> key, <span class="predefined-type">int</span> x, <span class="predefined-type">int</span> y){
+  <span class="keyword">switch</span> (key) {
+  <span class="keyword">case</span> <span class="char">'s'</span>:
+    shoulder = (shoulder + <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="char">'S'</span>:
+    shoulder = (shoulder - <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="char">'e'</span>:
+    elbow = (elbow + <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="char">'E'</span>:
+    elbow = (elbow - <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="char">'p'</span>:
+    thumb = (thumb + <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="char">'P'</span>:
+    thumb = (thumb - <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="char">'i'</span>:
+    index = (index + <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="char">'I'</span>:
+    index = (index - <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="char">'m'</span>:
+    middle = (middle + <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="char">'M'</span>:
+    middle = (middle - <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="char">'b'</span>:
+    base = (base + <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="char">'B'</span>:
+    base = (base - <span class="integer">5</span>) % <span class="integer">360</span>;
+    glutPostRedisplay();
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="integer">27</span>:
+    exit(<span class="integer">0</span>);
+    <span class="keyword">break</span>;
+  <span class="keyword">default</span>:
+    <span class="keyword">break</span>;
+  }
+}
+
+<span class="predefined-type">int</span> main(<span class="predefined-type">int</span> argc, <span class="predefined-type">char</span>** argv){
+  glutInit(&amp;argc, argv);
+  glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
+  glutInitWindowSize (<span class="integer">500</span>, <span class="integer">500</span>);
+  glutInitWindowPosition (<span class="integer">100</span>, <span class="integer">100</span>);
+  glutCreateWindow (argv[<span class="integer">0</span>]);
+  init ();
+  glutDisplayFunc(display);
+  glutReshapeFunc(reshape);
+  glutKeyboardFunc(keyboard);
+  glutMainLoop();
+  <span class="keyword">return</span> <span class="integer">0</span>;
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Resultado</p>
 </li>
-</ol>
+</ul>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -730,7 +1746,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-09-04 11:34:16 BRT
+Last updated 2015-09-04 12:38:02 BRT
 </div>
 </div>
 </body>
