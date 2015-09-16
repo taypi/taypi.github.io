@@ -133,7 +133,7 @@ void keyboard(unsigned char key, int x, int y){
 }
 
 void anim(void){
-	eixox = (eixox + rand()%15) % 360;
-	eixoy = (eixoy - rand()%15) % 360;
+	eixox = (eixox + 4) % 360;
+	eixoy = (eixoy - 4) % 360;
 	glutPostRedisplay();
 }
