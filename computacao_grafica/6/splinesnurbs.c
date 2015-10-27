@@ -23,12 +23,13 @@ GLfloat topo    =+5;
 GLfloat longe   =+5;
 GLfloat perto   =-5;
 
-enum {U, UA, NU};
+enum {UNIFORME, ABERTO, NAOUNIFORME};
 GLint spline;
 GLUnurbsObj *nc;
-GLfloat nos[10]={0.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 3.0, 3.0, 3.0};
-GLint nNos=10;
-GLint k=4;
+const int nNos=10;
+GLfloat nosUniforme[nNos]={0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0};
+GLfloat nosAberto[nNos]={0.0, 0.0, 0.0, 0.0, 3.0, 6.0, 9.0, 9.0, 9.0, 9.0};
+GLfloat nosNaoUniforme[nNos]={0.0, 0.0, 0.0, 0.0, 1.0, 2.5, 3.0, 3.0, 3.0, 6.0};
 
 GLint matrizViewport[4];
 GLdouble matrizModelview[16], matrizProjecao[16];
@@ -39,62 +40,41 @@ void display(void){
   int i;
   glClear(GL_COLOR_BUFFER_BIT);
   switch(spline){
-  case U:
-		for (int i = 0; i < 10; i++){
-			nos[i] = 3*i/9;
-		}
-    gluBeginCurve(nc);
-    gluNurbsCurve(nc, nNos, nos, 3, &vertices[0][0], 4, GL_MAP1_VERTEX_3);
-    gluEndCurve(nc);
-    break;
-	case UA:
-		for (int i = 0; i < 10; i++){
-			if (i < k)
-				nos[i] = 0;
-			else if (i > k+1)
-				nos[i] = (nNos - k)/2;
-			else
-				nos[i] = i-k+1;
-		}
-    gluBeginCurve(nc);
-    gluNurbsCurve(nc, nNos, nos, 3, &vertices[0][0], 4, GL_MAP1_VERTEX_3);
-    gluEndCurve(nc);
-    break;
-	case NU:
-		for (int i = 0; i < 10; i++){
-			if (i == 0)
-				nos[i] = 0;
-			else if (i == 9)
-				nos[i] = 3.0;
-			else if (i < k)
-				nos[i] = i/10 + 0.5;
-			else
-				nos[i] = i/10+2;
-		}
-    gluBeginCurve(nc);
-    gluNurbsCurve(nc, nNos, nos, 3, &vertices[0][0], 4, GL_MAP1_VERTEX_3);
-    gluEndCurve(nc);
-    break;
-  }
-  glPointSize(5.0);
-  glColor3f(1.0, 1.0, 0.0);
-  glBegin(GL_LINE_STRIP);
-  for (i = 0; i < nVertices; i++) 
+    case UNIFORME:
+      gluBeginCurve(nc);
+      gluNurbsCurve(nc, nNos, nosUniforme, 3, &vertices[0][0], 4, GL_MAP1_VERTEX_3);
+      gluEndCurve(nc);
+      break;
+    case ABERTO:
+      gluBeginCurve(nc);
+      gluNurbsCurve(nc, nNos, nosAberto, 3, &vertices[0][0], 4, GL_MAP1_VERTEX_3);
+      gluEndCurve(nc);
+      break;
+  	case NAOUNIFORME:
+      gluBeginCurve(nc);
+      gluNurbsCurve(nc, nNos, nosNaoUniforme, 3, &vertices[0][0], 4, GL_MAP1_VERTEX_3);
+      gluEndCurve(nc);
+      break;
+    }
+    glPointSize(5.0);
+    glColor3f(1.0, 1.0, 0.0);
+    glBegin(GL_LINE_STRIP);
+    for (i = 0; i < nVertices; i++) 
     glVertex3fv(&vertices[i][0]);
-  glEnd();
-  glColor3f(1.0, 0.0, 0.0);
-  glBegin(GL_POINTS);
-  for (i = 0; i < nVertices; i++) 
+    glEnd();
+    glColor3f(1.0, 0.0, 0.0);
+    glBegin(GL_POINTS);
+    for (i = 0; i < nVertices; i++) 
     glVertex3fv(&vertices[i][0]);
-  glEnd();
-  glColor3f(1.0, 1.0, 1.0);
-  glFlush();
-  glutSwapBuffers();
+    glEnd();
+    glColor3f(1.0, 1.0, 1.0);
+    glFlush();
+    glutSwapBuffers();
 }
 
 void init(void){
   glClearColor(0.0, 0.0, 0.0, 0.0);
-  spline=UA;
+  spline=ABERTO;
   nc= gluNewNurbsRenderer();
   gluNurbsProperty(nc, GLU_SAMPLING_TOLERANCE, 5.0);
   glEnable(GL_MAP1_VERTEX_3);
@@ -122,15 +102,15 @@ void keyboard(unsigned char key, int x, int y)
 {
   switch (key) {
   case 'u':
-    spline = U;
+    spline = UNIFORME;
     glutPostRedisplay();
     break;
   case 'o':
-    spline = UA;
+    spline = ABERTO;
     glutPostRedisplay();
     break;
 	case 'n':
-    spline = NU;
+    spline = NAOUNIFORME;
     glutPostRedisplay();
     break;
   case 27:
