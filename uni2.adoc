@@ -109,34 +109,6 @@ Nas curvas NURBs, o comportamento da curva de Bézier pode ser imitado, utilizan
 
 ====
 
-== Superfícies no espaço
-
-=== _braco_garra_
-
-* Código fonte: link:computacao_grafica/4/braco_garra.c[braco_garra.c, window="_blank"]
-
-[source,c]
-----
-include::{sourcedir}/4/braco_garra.c[]
-----
-
-* Resultado
-
-image::4/braco_garra.gif[]
-
-=== _braco_garra_3d_
-
-* Código fonte: link:computacao_grafica/4/braco_garra_3d.c[braco_garra_3d.c, window="_blank"]
-
-[source,c]
-----
-include::{sourcedir}/4/braco_garra_3d.c[]
-----
-
-* Resultado
-
-image::4/braco_garra_3d.gif[]
-
 == Modelagem de Sólidos
 
 === _superJato_
@@ -150,45 +122,19 @@ include::{sourcedir}/9/superJato.c[]
 
 * Resultado
 
-image::4/braco_garra.gif[]
+image::9/superJato1.png[]
 
-=== _braco_garra_3d_
+image::9/superJato2.png[]
 
-* Código fonte: link:computacao_grafica/4/braco_garra_3d.c[braco_garra_3d.c, window="_blank"]
+=== _logo_
+
+* Código fonte: link:computacao_grafica/9/logo.c[logo.c, window="_blank"]
 
 [source,c]
 ----
-include::{sourcedir}/4/braco_garra_3d.c[]
+include::{sourcedir}/9/logo.c[]
 ----
 
 * Resultado
 
-image::4/braco_garra_3d.gif[]
-
-== Modelagem de Iluminação e Sombreamento
-
-=== _braco_garra_
-
-* Código fonte: link:computacao_grafica/4/braco_garra.c[braco_garra.c, window="_blank"]
-
-[source,c]
-----
-include::{sourcedir}/4/braco_garra.c[]
-----
-
-* Resultado
-
-image::4/braco_garra.gif[]
-
-=== _braco_garra_3d_
-
-* Código fonte: link:computacao_grafica/4/braco_garra_3d.c[braco_garra_3d.c, window="_blank"]
-
-[source,c]
-----
-include::{sourcedir}/4/braco_garra_3d.c[]
-----
-
-* Resultado
-
-image::4/braco_garra_3d.gif[]
+image::9/logo.png[]
