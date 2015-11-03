@@ -29,7 +29,7 @@ GLUnurbsObj *nc;
 const int nNos=10;
 GLfloat nosUniforme[nNos]={0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0};
 GLfloat nosAberto[nNos]={0.0, 0.0, 0.0, 0.0, 3.0, 6.0, 9.0, 9.0, 9.0, 9.0};
-GLfloat nosNaoUniforme[nNos]={0.0, 0.0, 0.0, 0.0, 1.0, 2.5, 3.0, 3.0, 3.0, 6.0};
+GLfloat nosNaoUniforme[nNos]={0.0, 0.5, 0.5, 1.0, 2.0, 2.5, 3.0, 3.0, 6.0, 9.0};
 
 GLint matrizViewport[4];
 GLdouble matrizModelview[16], matrizProjecao[16];

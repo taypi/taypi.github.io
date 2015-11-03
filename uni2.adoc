@@ -1,0 +1,194 @@
+:imagesdir: computacao_grafica/asciidoctor/source/
+:data-uri:
+:sectnums:
+:linkattrs:
+:toc: left
+:sourcedir: computacao_grafica
+:source-highlighter: coderay
+
+= Segunda Unidade
+
+== Projeções Geométricas
+
+=== _tiposDeProjecoes_
+
+* Código fonte: link:computacao_grafica/5/tiposdeprojecoes.c[tiposdeprojecoes.c, window="_blank"]
+
+[source,c]
+----
+include::{sourcedir}/5/tiposdeprojecoes.c[]
+----
+
+* Resultado
+
+d
+
+image::5/d.png[]
+e
+
+image::5/e.png[]
+t
+
+image::5/t.png[]
+f
+
+image::5/f.png[]
+c
+
+image::5/c.png[]
+T
+
+image::5/T.png[]
+F
+
+image::5/F.png[]
+
+=== _idle_
+
+* Código fonte: link:computacao_grafica/5/idle.c[idle.c, window="_blank"]
+
+[source,c]
+----
+include::{sourcedir}/5/idle.c[]
+----
+
+* Resultado
+
+image::5/idle.gif[]
+
+== Curvas no Plano
+
+=== _Comente as funcionalidades das curvas de Bézier e NURBS utilizadas neste exemplo._
+
+====
+
+As curvas de Bézier são perfeitas para desenhar contornos suaves, por isso, sua primeira aplicação foi no desenho de carros. Além disso, elas tem como mérito o fato de proporcionarem uma definição fácil das curvas de maneira que os computadores conseguem entendê-las.
+
+As NURBS estão presente em CADs, na engenharia e na maioria da industria, sendo utilizadas, na maioria das vezes, como tecnologia standard. Elas podem ser eficientemente moldadas por programas de computador e ainda permitem uma fácil interação com o utilizador.
+
+====
+
+=== _splinesnurbs_
+
+* Código fonte: link:computacao_grafica/6/splinesnurbs.c[splinesnurbs.c, window="_blank"]
+
+[source,c]
+----
+include::{sourcedir}/6/splinesnurbs.c[]
+----
+
+* Resultado
+
+Vetor uniforme
+
+image::6/u.png[]
+Vetor uniforme aberto
+
+image::6/o.png[]
+Vetor não uniforme
+
+image::6/n.png[]
+
+=== _Qual a influência do vetor de nós foi utilizado sobre o comportamento das curvas tipo NURBS? Comente o resultado que obteve para curvas de ordens 3 e 5._
+
+====
+
+Nas curvas de ordem 4, quando é utilizado um vetor de nós uniforme, a curva se comporta de forma homogênia, mas não passa pelos pontos extremos da curva. Já quando o vetor usado é uniforme aberto, a curva se comporta como uma curva de Bézier. E quando o vetor é não uniforme o comportamento da curva muda de acordo com os valores escolhidos, podendo se comportar de formar parecida com a dos casos citados anteriormente.
+
+Quando as ordens foram mudadas para 3 e 5, o comportamento das curvas abertas foi alterado, pois a mesma não passava no pontos extremos. 
+
+====
+
+=== _Compare curvas de Beziér com NURBS considerando ordens iguais para ambas as curvas._
+
+====
+
+Na curva de Bézier, as funções interpolam a curva nos pontos inicial e final do polígono de controle, e o comportamento da curva é definido pela tangente de dois pontos adicionais.
+
+Nas curvas NURBs, o comportamento da curva de Bézier pode ser imitado, utilizando um vetor de nós uniforme aberto. Além disso, ela pode assumir outros comportamentos, dependendo do tipo de vetor escolhido.
+
+====
+
+== Superfícies no espaço
+
+=== _braco_garra_
+
+* Código fonte: link:computacao_grafica/4/braco_garra.c[braco_garra.c, window="_blank"]
+
+[source,c]
+----
+include::{sourcedir}/4/braco_garra.c[]
+----
+
+* Resultado
+
+image::4/braco_garra.gif[]
+
+=== _braco_garra_3d_
+
+* Código fonte: link:computacao_grafica/4/braco_garra_3d.c[braco_garra_3d.c, window="_blank"]
+
+[source,c]
+----
+include::{sourcedir}/4/braco_garra_3d.c[]
+----
+
+* Resultado
+
+image::4/braco_garra_3d.gif[]
+
+== Modelagem de Sólidos
+
+=== _braco_garra_
+
+* Código fonte: link:computacao_grafica/4/braco_garra.c[braco_garra.c, window="_blank"]
+
+[source,c]
+----
+include::{sourcedir}/4/braco_garra.c[]
+----
+
+* Resultado
+
+image::4/braco_garra.gif[]
+
+=== _braco_garra_3d_
+
+* Código fonte: link:computacao_grafica/4/braco_garra_3d.c[braco_garra_3d.c, window="_blank"]
+
+[source,c]
+----
+include::{sourcedir}/4/braco_garra_3d.c[]
+----
+
+* Resultado
+
+image::4/braco_garra_3d.gif[]
+
+== Modelagem de Iluminação e Sombreamento
+
+=== _braco_garra_
+
+* Código fonte: link:computacao_grafica/4/braco_garra.c[braco_garra.c, window="_blank"]
+
+[source,c]
+----
+include::{sourcedir}/4/braco_garra.c[]
+----
+
+* Resultado
+
+image::4/braco_garra.gif[]
+
+=== _braco_garra_3d_
+
+* Código fonte: link:computacao_grafica/4/braco_garra_3d.c[braco_garra_3d.c, window="_blank"]
+
+[source,c]
+----
+include::{sourcedir}/4/braco_garra_3d.c[]
+----
+
+* Resultado
+
+image::4/braco_garra_3d.gif[]
